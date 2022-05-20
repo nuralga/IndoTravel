@@ -1,15 +1,15 @@
 const menuBtn = document.querySelector('.header__menu-button');
 const nav = document.querySelector('.header__menu');
 
-menuBtn.addEventListener('click', () => {
-    nav.classList.toggle('header__menu_active');
+document.addEventListener('click', (e) => {
+    const target = e.target;
 
-    nav.addEventListener('click', e => {
-        const target = e.target;
-        if (target === nav) {
-            nav.classList.add('header__menu_active');
-        } else {
-            nav.classList.remove('header__menu_active');
-        }
-      });
-})
+    if (target === menuBtn) {
+        nav.classList.toggle('header__menu_active');
+    } else if (target.closest('.header__menu')) {
+        if (target.closest('.header__link')) nav.classList.remove('header__menu_active');
+    } else {
+        nav.classList.remove('header__menu_active');
+    }
+});
+
