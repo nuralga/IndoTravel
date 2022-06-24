@@ -14,15 +14,23 @@ if (docEl.clientWidth > 758) {
     
     document.body.append(fly);
     
+    let percentScroll = NaN;
+
     const calcPositionFly = () => {
         const maxTop = docEl.clientHeight - fly.clientHeight;
         // console.log('maxTop: ', maxTop);
+        let prevPercentScroll = percentScroll;
         const maxScroll = docEl.scrollHeight - docEl.clientHeight;
-        const percentScroll = (window.pageYOffset * 100) / maxScroll;
+        percentScroll = (window.pageYOffset * 100) / maxScroll;
         
         const top = maxTop * (percentScroll / 100);
         
-        fly.style.transform  = `translateY(${-top}px)`;
+        let rt = 0;
+        if (prevPercentScroll > percentScroll) {
+            rt = 180;
+        }
+        
+        fly.style.transform  = `translateY(${-top}px) rotate(${rt}deg)`;
     
     };
     
