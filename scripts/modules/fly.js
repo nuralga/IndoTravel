@@ -10,6 +10,7 @@ if (docEl.clientWidth > 758) {
         bottom: 0;
         pointer-events: none;
         background: url('img/airplane.svg') center/contain no-repeat;
+        transition: all .3s;
         `;
     
     document.body.append(fly);
