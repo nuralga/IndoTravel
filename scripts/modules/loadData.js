@@ -22,7 +22,7 @@
 const loadTours = async (cb) => {
     const result = await fetch('./db.json');
     const data = await result.json();
-    console.log('data: ', data);
+    // console.log('data: ', data);
 
     return data;
 }
@@ -90,15 +90,15 @@ const renderTours = async () => {
             if (element.date === event.target.value) {
                 const dates = element.date.split(" - ");
                 minDate = dates[0].split(".");
-                console.log('minDate: ', minDate);
+                // console.log('minDate: ', minDate);
                 maxDate = dates[1].split(".");
-                console.log('maxDate: ', maxDate);
+                // console.log('maxDate: ', maxDate);
                 const date1 = new Date(minDate[1] + '.' + minDate[0]);
                 const date2 = new Date(maxDate[1] + '.' + maxDate[0]);
                 month1 = date1.toLocaleString('default', { month: 'long' });
                 month2 = date2.toLocaleString('default', { month: 'long' });
-                console.log('month1: ', month1);
-                console.log('month2: ', month2);
+                // console.log('month1: ', month1);
+                // console.log('month2: ', month2);
                 txt = `${minDate[0]} ${month1} - ${maxDate[0]} ${month2}`;
                 reservationData.innerText = txt;
             }
