@@ -1,3 +1,4 @@
+import './modules/loadData.js'
 import { timer, setDeadline } from "./modules/control.js";
 import './modules/acc.js';
 import './modules/burger.js'
