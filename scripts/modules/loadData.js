@@ -47,6 +47,7 @@ const renderSelect = (id, data, myClasses) => {
 }
 
 const changePplCount = (id, myClasses, min, max) => {
+    console.log('id, myClasses, min, max: ', id, myClasses, min, max);
     const select = document.getElementById(id);
     while (select.lastChild.innerText !== 'Количество человек') {
         select.removeChild(select.lastChild);
@@ -101,8 +102,7 @@ const renderTours = async () => {
                 // console.log('month2: ', month2);
                 txt = `${minDate[0]} ${month1} - ${maxDate[0]} ${month2}`;
                 reservationData.innerText = txt;
-            }
-            const ppl2 = changePplCount('reservation__people', ['tour__option', 'reservation__option'], element["min-people"], element["max-people"]);
+                const ppl2 = changePplCount('reservation__people', ['tour__option', 'reservation__option'], element["min-people"], element["max-people"]);
             ppl2.addEventListener('change', (event) => {
                 pplCount = event.target.value
                 txt = `${minDate[0]} ${month1} - ${maxDate[0]} ${month2}, ${pplCount} человека`;
@@ -110,6 +110,8 @@ const renderTours = async () => {
                 const reservationPrice = document.querySelector('.reservation__price');
                 reservationPrice.innerText = `${new Intl.NumberFormat('ru-RU').format(event.target.value * element.price)}₽`;
             });
+            }
+            
         }
         );
     })
