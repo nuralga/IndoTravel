@@ -47,7 +47,7 @@ const renderSelect = (id, data, myClasses) => {
 }
 
 const changePplCount = (id, myClasses, min, max) => {
-    console.log('id, myClasses, min, max: ', id, myClasses, min, max);
+    // console.log('id, myClasses, min, max: ', id, myClasses, min, max);
     const select = document.getElementById(id);
     while (select.lastChild.innerText !== 'Количество человек') {
         select.removeChild(select.lastChild);
