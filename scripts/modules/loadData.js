@@ -121,3 +121,54 @@ const renderTours = async () => {
 
 
 renderTours();
+
+const sendData = (body, callback) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://jsonplaceholder.typicode.com/posts');
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.addEventListener('load', () => {
+        const data = JSON.parse(xhr.response);
+        callback(data);
+    });
+
+    xhr.addEventListener('error', () => {
+        console.log('error');
+    });
+
+    xhr.send(JSON.stringify(body));
+}
+
+const form = document.querySelector('.reservation__form');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    sendData({
+        title: document.querySelector('.reservation__title').innerText,
+        body: [
+            form.dates.value,
+            form.people.value,
+            form.reservation__name.value,
+            form.reservation__phone.value,
+        ]
+    },
+    (data) => {
+        form.innerHTML = `<h2 class="reservation__title" style="text-align: center;">Ваша заявка успешно <br>отправлена</h2>
+        <h5>Наши менеджеры свяжутся с вами в течении 3-х рабочих дней</h5>`;
+    })
+});
+
+const footerForm = document.querySelector('.footer__form');
+footerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    sendData({
+        title: document.querySelector('.footer__form-title').innerText,
+        body: document.querySelector('.footer__input').value,
+    },
+    (data) => {
+        footerForm.innerHTML = `<h2 class="footer__title footer__form-title">Ваша заявка успешно отправлена</h2>
+        <p class="footer__text">Наши менеджеры свяжутся с вами в течении 3-х рабочих дней</p>`;
+    })
+});
