@@ -1,24 +1,4 @@
-
-// // первый способ - через callback
-// const loadTours = async (cb) => {
-//     const result = await fetch('db.json');
-//     const data = await result.json();
-//     console.log('data: ', data);
-
-//     cb(data)
-// }
-
-// const renderTours = data => {
-//     const cardsWrapper = document.createElement('div');
-//     cardsWrapper.myClasses = 'cards';
-
-//     const goods = data.map(item => {
-//         console.log(item);
-//     });
-// }
-// loadTours(renderTours);
-
-// // второй способ - через async
+import showModal from './modal.js';
 const loadTours = async (cb) => {
     const result = await fetch('./db.json');
     const data = await result.json();
@@ -139,24 +119,57 @@ const sendData = (body, callback) => {
     xhr.send(JSON.stringify(body));
 }
 
+// const form = document.querySelector('.reservation__form');
+
+// form.addEventListener('submit', (e) => {
+//     e.preventDefault();
+
+//     sendData({
+//         title: document.querySelector('.reservation__title').innerText,
+//         body: [
+//             form.dates.value,
+//             form.people.value,
+//             form.reservation__name.value,
+//             form.reservation__phone.value,
+//         ]
+//     },
+//     (data) => {
+//         form.innerHTML = `<h2 class="reservation__title" style="text-align: center;">Ваша заявка успешно <br>отправлена</h2>
+//         <h5>Наши менеджеры свяжутся с вами в течении 3-х рабочих дней</h5>`;
+//     })
+// });
+
 const form = document.querySelector('.reservation__form');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    sendData({
-        title: document.querySelector('.reservation__title').innerText,
-        body: [
-            form.dates.value,
-            form.people.value,
-            form.reservation__name.value,
-            form.reservation__phone.value,
-        ]
-    },
-    (data) => {
-        form.innerHTML = `<h2 class="reservation__title" style="text-align: center;">Ваша заявка успешно <br>отправлена</h2>
-        <h5>Наши менеджеры свяжутся с вами в течении 3-х рабочих дней</h5>`;
-    })
+    const body = {
+        title: 'Подтверждение заявки',
+        peopleCount: form.people.value,
+        dates: form.dates.value,
+        price: document.querySelector('.reservation__price').innerText,
+    };
+    
+    const confirm = await showModal(0, body);
+    console.log('confirm: ', confirm);
+    if (confirm) {
+        sendData({
+                    title: document.querySelector('.reservation__title').innerText,
+                    body: [
+                        form.dates.value,
+                        form.people.value,
+                        form.reservation__name.value,
+                        form.reservation__phone.value,
+                    ]
+                },
+                (data) => {
+                    form.dates.disabled = true;
+                    form.people.disabled = true;
+                    form.reservation__name.disabled = true;
+                    form.reservation__phone.disabled = true;
+                    document.querySelector('.reservation__button').disabled = true;
+                })
+    }
 });
 
 const footerForm = document.querySelector('.footer__form');
